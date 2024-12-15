@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicure.AI - Log In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background -->
+    <div class="background"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            🎧 <span>Musicure.AI</span>
+        </div>
+    </nav>
+
+    <!-- Auth Section -->
+    <div class="auth-container">
+        <h1 class="title">Welcome Back</h1>
+        <p class="subtitle">Log In to Continue Your Music Therapy</p>
+
+        <!-- Input Fields -->
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <!-- Buttons -->
+            <button type="button" class="btn login-btn" id="loginButton">Log In</button>
+            <button type="button" class="btn signup-btn" id="signupButton">Sign Up</button>
+            <a href="#" class="forgot">Forgot Password?</a>
+        </form>
+    </div>
+
+    <script>
+        // Get references to buttons
+        const loginButton = document.getElementById("loginButton");
+        const signupButton = document.getElementById("signupButton");
+
+        // Function for login
+        async function handleLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("http://localhost:8080/admin/signin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem("token", data.token); // Store token locally
+                    alert("Login successful!");
+                    window.location.href = "../dashboard/index.html"; // Redirect to dashboard
+                } else {
+                    const error = await response.json();
+                    alert("Login failed: " + error.message);
+                }
+            } catch (err) {
+                console.error("Error during login:", err);
+                alert("An error occurred. Please try again.");
+            }
+        }
+
+        async function handleSignup() {
+    const loginButton = document.getElementById("loginButton");
+    const signupButton = document.getElementById("signupButton");
+
+    // Hide signup button and change login button to "Register"
+    signupButton.innerHTML = "Register";
+    loginButton.style.display = "none"; // Hide the signup button after signup attempt
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === '' || username == null) {
+        alert("Username cannot be empty");
+        return;
+    }
+    if (password === '' || password == null) {
+        alert("Password cannot be empty");
+        return;
+    }
+
+    
+        const response = await fetch("http://localhost:8080/admin/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        // Handle the response
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Signup successful! Please log in now.");
+            loginButton.style.display = "block"; // Show the signup button again
+            loginButton.innerHTML = "Log In"; // Change back to 'Log In'
+            signupButton.innerHTML = "Sign Up"; // Change back to 'Sign Up'
+            // window.location.href="../dashboard/index.html"
+            window.relaod();
+        } else {
+            alert("Signup failed: " + data.message);
+        }
+}
+
+
+
+        // Attach event listeners to buttons
+        loginButton.addEventListener("click", handleLogin);
+        signupButton.addEventListener("click", handleSignup);
+    </script>
+</body>
+</html>

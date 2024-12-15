@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicure.AI - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <span>Musicure.AI</span>
+        </div>
+        <ul class="menu">
+            <li class="active"><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+            <li><a href="#" onclick="showSection('profile')">My Profile</a></li>
+            <li><a href="#" onclick="showSection('music-therapy')">Music Therapy</a></li>
+            <li><a href="#" onclick="showSection('my-music')">My Music</a></li>
+            <li><a href="#" onclick="showSection('my-plan')">My Plan</a></li>
+            <li><a href="#" id="logoutButton">Log Out</a></li>
+        </ul>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="content-section">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <h1>Welcome Back,</h1>
+                <div class="user-profile">
+                    <span class="username">Name</span>
+                    <div class="avatar"></div>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="cards">
+                <div class="card">
+                    <h2>Today's Sessions</h2>
+                    <p>0</p>
+                </div>
+                <div class="card">
+                    <h2>Completed Therapy</h2>
+                    <p>0%</p>
+                </div>
+                <div class="card">
+                    <h2>Last Login</h2>
+                    <p>Today</p>
+                </div>
+                <div class="card">
+                    <h2>Streak</h2>
+                    <p>1 Days</p>
+                </div>
+            </div>
+
+            <!-- Music Therapy Section -->
+            <div class="music-section">
+                <h2>Start Your Music Therapy</h2>
+                <div class="therapy-card">
+                    <p>Relaxing Playlist</p>
+                    <button onclick="showSection('my-music')">Play Now</button>
+                </div>
+                <div class="therapy-card">
+                    <p>My Health Status</p>
+                    <button onclick="showSection('my-plan')">Check Now</button>
+                </div>
+                <div class="therapy-card">
+                    <p>New Plan</p>
+                    <button onclick="showSection('music-therapy')">Get Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile-section" class="content-section" style="display: none;">
+            <div class="top-bar">
+                <h1>My Health Profile</h1>
+            </div>
+
+            <form id="health-profile-form" class="profile-form">
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" disabled="disabled" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" required min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                            <option value="prefer-not-say">Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Mental Health Assessment</h2>
+                    <div class="form-group">
+                        <label for="anxiety">Anxiety Level</label>
+                        <select id="anxiety" name="anxiety" required>
+                            <option value="">Select level</option>
+                            <option value="none">None</option>
+                            <option value="low">Low</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="high">High</option>
+                            <option value="severe">Severe</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="depression">Depression Symptoms</label>
+                        <select id="depression" name="depression" required>
+                            <option value="">Select option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sleep">Sleep Quality</label>
+                        <select id="sleep" name="sleep" required>
+                            <option value="">Select quality</option>
+                            <option value="poor">Poor</option>
+                            <option value="average">Average</option>
+                            <option value="good">Good</option>
+                            <option value="excellent">Excellent</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Physical Health</h2>
+                    <div class="form-group">
+                        <label for="chronicPain">Chronic Pain</label>
+                        <select id="chronicPain" name="chronicPain" required onchange="togglePainFields()">
+                            <option value="">Select option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div id="painDetails" style="display: none;">
+                        <div class="form-group">
+                            <label for="painLocation">Pain Location</label>
+                            <input type="text" id="painLocation" name="painLocation"
+                                placeholder="e.g., back, neck, knees">
+                        </div>
+                        <div class="form-group">
+                            <label for="painIntensity">Pain Intensity (1-10)</label>
+                            <input type="number" id="painIntensity" name="painIntensity" min="1" max="10">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Additional Information</h2>
+                    <div class="form-group">
+                        <label for="ptsd">PTSD Symptoms</label>
+                        <select id="ptsd" name="ptsd" required>
+                            <option value="">Select option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="adhd">ADHD Issues</label>
+                        <select id="adhd" name="adhd" required>
+                            <option value="">Select option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="stress">Stress Level</label>
+                        <select id="stress" name="stress" required>
+                            <option value="">Select level</option>
+                            <option value="low">Low</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="high">High</option>
+                            <option value="extreme">Extreme</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Lifestyle</h2>
+                    <div class="form-group">
+                        <label for="exercise">Exercise Frequency</label>
+                        <select id="exercise" name="exercise" required>
+                            <option value="">Select frequency</option>
+                            <option value="never">Never</option>
+                            <option value="1-2">1-2 times/week</option>
+                            <option value="3-5">3-5 times/week</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet">Diet Quality</label>
+                        <select id="diet" name="diet" required>
+                            <option value="">Select quality</option>
+                            <option value="poor">Poor</option>
+                            <option value="average">Average</option>
+                            <option value="balanced">Balanced</option>
+                            <option value="healthy">Healthy</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="screenTime">Daily Screen Time (hours)</label>
+                        <input type="number" id="screenTime" name="screenTime" required min="0" max="24">
+                    </div>
+                    <div class="form-group">
+                        <label for="social">Social Interaction Frequency</label>
+                        <select id="social" name="social" required>
+                            <option value="">Select frequency</option>
+                            <option value="rarely">Rarely</option>
+                            <option value="occasionally">Occasionally</option>
+                            <option value="frequently">Frequently</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Save Profile</button>
+            </form>
+        </div>
+
+        <!-- Music Therapy Section -->
+        <div id="music-therapy-section" class="content-section" style="display: none;">
+            <div class="top-bar">
+                <h1>Music Therapy Recommendations</h1>
+            </div>
+            <div class="therapy-content">
+                <div class="loading-spinner" id="therapy-loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Generating your personalized music therapy recommendation...</p>
+                </div>
+                <div id="therapy-response" class="therapy-card">
+                    <p>Click the button below to get your personalized music therapy recommendation.</p>
+                    <button onclick="getMusicTherapy()" class="therapy-button">Get Recommendation</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Music Panel -->
+        <div id="my-music-section" class="content-section" style="display: none;">
+            <div class="top-bar">
+                <h1>My Music</h1>
+            </div>
+            <div class="my-music-panel">
+                <h2>My Music</h2>
+            </div>
+        </div>
+
+        <!-- My Plan Section -->
+        <div id="my-plan-section" class="content-section" style="display: none;">
+            <div class="top-bar">
+                <h1>My Plan</h1>
+            </div>
+            <div class="health-profiles-list">
+                <h2>All Health Profiles</h2>
+                <div id="health-profiles-container">
+                    <!-- Health profiles will be displayed here -->
+                </div>
+            </div>
+            <div class="saved-therapies">
+                <h2>Saved Music Therapies</h2>
+                <div id="saved-therapies-list">
+                    <!-- Saved therapies will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saves the health profile of user  -->
+    <script>
+        // Function to decode JWT
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (error) {
+                console.error("Error decoding JWT:", error);
+                return null;
+            }
+        }
+    
+        document.getElementById('health-profile-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+    
+            // Gather form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+    
+            // Transform chronicPain fields based on user input
+            data.chronicPain = {
+                hasPain: data.chronicPain === 'yes',
+                painLocation: data.painLocation || '',
+                painIntensity: parseInt(data.painIntensity, 10) || null,
+            };
+    
+            // Remove redundant fields
+            delete data.painLocation;
+            delete data.painIntensity;
+    
+            // Extract JWT from localStorage
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("You are not logged in. Please log in to continue.");
+                return;
+            }
+    
+            // Decode JWT to get username
+            const decodedToken = parseJwt(token);
+            if (decodedToken && decodedToken.username) {
+                data.username = decodedToken.username; // Add username to the payload
+            } else {
+                alert("Invalid token. Please log in again.");
+                return;
+            }
+    
+            console.log("Data to send:", data);
+    
+            try {
+                // Send data to the backend
+                const response = await fetch('http://localhost:8080/admin/health-profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `${token}` // Include token in the header
+                    },
+                    body: JSON.stringify(data),
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("Profile saved successfully:", result);
+                    alert("Profile saved successfully.");
+                } else {
+                    const error = await response.json();
+                    console.error("Failed to save profile:", error);
+                    alert("Failed to save profile. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("An unexpected error occurred. Please try again.");
+            }
+        });
+    </script>
+
+
+    <script>
+        function showSection(sectionName) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            document.getElementById(sectionName + '-section').style.display = 'block';
+
+            document.querySelectorAll('.menu li').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.querySelector(`.menu li a[onclick="showSection('${sectionName}')"]`).parentElement.classList.add('active');
+        }
+
+        function togglePainFields() {
+            const chronicPain = document.getElementById('chronicPain');
+            const painDetails = document.getElementById('painDetails');
+            painDetails.style.display = chronicPain.value === 'yes' ? 'block' : 'none';
+        }
+
+        async function getMusicTherapy() {
+            const loadingElement = document.getElementById('therapy-loading');
+            const responseElement = document.getElementById('therapy-response');
+
+            try {
+                loadingElement.style.display = 'flex';
+                responseElement.innerHTML = '';
+
+                // Get the user's health profile data
+                const token = localStorage.getItem('token');
+                const healthProfileResponse = await fetch('http://localhost:8080/admin/health-profile', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                const healthProfile = await healthProfileResponse.json();
+
+                // Send the profile data to get music therapy recommendation
+                const response = await fetch('http://localhost:5000/music-therapy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(healthProfile)
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Create table HTML
+                const tableHTML = `
+                    <table class="therapy-table">
+                        <thead>
+                            <tr>
+                                <th>Time of Day</th>
+                                <th>Type of Music</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.table.map(row => `
+                                <tr>
+                                    <td>${row.timeOfDay}</td>
+                                    <td>${row.musicType}</td>
+                                    <td>${row.purpose}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+
+                responseElement.innerHTML = `
+                    <div class="therapy-content">
+                        ${tableHTML}
+                        <div class="therapy-buttons">
+                            <button onclick="getMusicTherapy()" class="therapy-button">Get New Recommendation</button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `
+                    <div class="error-message">
+                        <p>Sorry, there was an error getting your recommendation. Please try again.</p>
+                        <p class="error-details">${error.message}</p>
+                    </div>
+                    <button onclick="getMusicTherapy()" class="therapy-button">Try Again</button>
+                `;
+            } finally {
+                loadingElement.style.display = 'none';
+            }
+        }
+
+        async function saveTherapy(content) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://localhost:8080/admin/save-therapy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    },
+                    body: JSON.stringify({ therapyContent: content })
+                });
+
+                if (response.ok) {
+                    alert('Therapy saved to My Plan!');
+                } else {
+                    throw new Error('Failed to save therapy');
+                }
+            } catch (error) {
+                console.error('Error saving therapy:', error);
+                alert('Failed to save therapy. Please try again.');
+            }
+        }
+
+        async function loadSavedTherapies() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://localhost:8080/admin/saved-therapies', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+
+                if (response.ok) {
+                    const therapies = await response.json();
+                    const container = document.getElementById('saved-therapies-list');
+
+                    if (therapies.length === 0) {
+                        container.innerHTML = '<p class="no-therapies">No saved therapies yet. Save some recommendations from the Music Therapy section!</p>';
+                        return;
+                    }
+
+                    container.innerHTML = therapies.map(therapy => `
+                        <div class="saved-therapy-card">
+                            <div class="therapy-content">
+                                ${therapy.therapyContent}
+                            </div>
+                            <div class="therapy-meta">
+                                Saved on: ${new Date(therapy.savedAt).toLocaleDateString()}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading saved therapies:', error);
+            }
+        }
+
+        document.querySelector('a[onclick="showSection(\'my-plan\')"]').addEventListener('click', loadSavedTherapies);
+    </script>
+
+    <script>
+        async function fetchUserData() {
+            try {
+                const token = localStorage.getItem("token");
+                console.log(token);
+
+                const response = await fetch("http://localhost:8080/admin/user/data", {
+                    headers: {
+                        authorization: `${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Update the dashboard with user-specific data
+                    document.querySelector(".top-bar h1").innerText = `Welcome Back, ${data.name}!`;
+                    document.querySelector(".username").innerText = data.name;
+                    document.querySelector("#username").value = data.name;
+
+                    // Update the cards
+                    document.querySelectorAll(".card")[0].querySelector("p").innerText = data.todaySessions;
+                    document.querySelectorAll(".card")[1].querySelector("p").innerText = data.completedTherapy;
+                    document.querySelectorAll(".card")[2].querySelector("p").innerText = data.musicTime;
+                    document.querySelectorAll(".card")[3].querySelector("p").innerText = data.streak;
+
+                    // Fetch health profile data using the username
+                    const healthResponse = await fetch(`http://localhost:8080/admin/health-profile?username=${data.name}`, {
+                        headers: {
+                            authorization: `${token}`,
+                        },
+                    });
+
+                    if (healthResponse.ok) {
+                        const healthData = await healthResponse.json();
+                        displayHealthProfile(healthData);
+                    } else if (healthResponse.status === 404) {
+                        document.getElementById('health-profile-details').innerHTML = `
+                            <div class="no-profile-message">
+                                <p>No health profile found. Please fill out your health profile in the My Profile section.</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    console.error("Failed to fetch user data:", response.status);
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        }
+
+        function displayHealthProfile(data) {
+            const healthProfileDetails = document.getElementById('health-profile-details');
+            const healthInfo = `
+                <div class="health-info-grid">
+                    <div class="info-item">
+                        <label>Age:</label>
+                        <span>${data.age}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Gender:</label>
+                        <span>${data.gender}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Anxiety Level:</label>
+                        <span>${data.anxiety}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Depression Level:</label>
+                        <span>${data.depression}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Sleep Quality:</label>
+                        <span>${data.sleep}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Chronic Pain:</label>
+                        <span>${data.chronicPain.hasPain ? 
+                            `Yes (Location: ${data.chronicPain.painLocation}, Intensity: ${data.chronicPain.painIntensity}/10)` 
+                            : 'No'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>PTSD Symptoms:</label>
+                        <span>${data.ptsd}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>ADHD Symptoms:</label>
+                        <span>${data.adhd}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Stress Level:</label>
+                        <span>${data.stress}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Exercise Routine:</label>
+                        <span>${data.exercise}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Diet Quality:</label>
+                        <span>${data.diet}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Daily Screen Time:</label>
+                        <span>${data.screenTime} hours</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Social Activity:</label>
+                        <span>${data.social}</span>
+                    </div>
+                </div>
+            `;
+            healthProfileDetails.innerHTML = healthInfo;
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tracks = [
+                'https://api.soundcloud.com/tracks/293',
+                'https://api.soundcloud.com/tracks/294',
+                'https://api.soundcloud.com/tracks/295',
+                'https://api.soundcloud.com/tracks/296',
+                'https://api.soundcloud.com/tracks/297',
+                'https://api.soundcloud.com/tracks/298',
+                'https://api.soundcloud.com/tracks/299'
+            ];
+
+            const myMusicPanel = document.querySelector('.my-music-panel');
+            myMusicPanel.innerHTML = '<h2>My Music</h2>';
+
+            for (let i = 0; i < 5; i++) {
+                const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+                myMusicPanel.innerHTML += `<iframe width=\"100%\" height=\"166\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=${encodeURIComponent(randomTrack)}\"></iframe>`;
+            }
+        });
+    </script>
+
+    <!-- //logout btn -->
+    <script>
+        const logoutButton = document.getElementById("logoutButton");
+
+        logoutButton.addEventListener("click", () => {
+            localStorage.removeItem("token");   
+
+            window.location.href = "../auth/index.html";
+        });
+
+        window.onload = fetchUserData;
+    </script>
+
+    
+
+    <script>
+        // Function to fetch and display all health profiles
+        async function fetchAllHealthProfiles() {
+            try {
+                const token = localStorage.getItem("token");
+                // Get current user's data first
+                const userResponse = await fetch("http://localhost:8080/admin/user/data", {
+                    headers: {
+                        authorization: `${token}`,
+                    },
+                });
+
+                if (!userResponse.ok) {
+                    throw new Error("Failed to fetch user data");
+                }
+
+                const userData = await userResponse.json();
+                const currentUsername = userData.name;
+
+                // Now fetch health profiles
+                const response = await fetch("http://localhost:8080/admin/all-health-profiles", {
+                    headers: {
+                        authorization: `${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const profiles = await response.json();
+                    // Filter profiles to only show the current user's profile
+                    const userProfile = profiles.filter(profile => profile.username === currentUsername);
+                    displayAllHealthProfiles(userProfile);
+                } else {
+                    console.error("Failed to fetch health profiles:", response.status);
+                    document.getElementById('health-profiles-container').innerHTML = `
+                        <div class="no-profile-message">
+                            <p>Failed to load health profile. Please try again later.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("Error fetching health profiles:", error);
+                document.getElementById('health-profiles-container').innerHTML = `
+                    <div class="no-profile-message">
+                        <p>An error occurred while loading your health profile.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayAllHealthProfiles(profiles) {
+            const container = document.getElementById('health-profiles-container');
+            
+            if (!profiles || profiles.length === 0) {
+                container.innerHTML = `
+                    <div class="no-profile-message">
+                        <p>No health profile found. Please complete your health profile in the My Profile section.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Since we're only displaying the current user's profile, we can use the first (and only) profile
+            const profile = profiles[0];
+            const profileHTML = `
+                <div class="health-profile-card">
+                    <div class="profile-header">
+                        <h3>${profile.fullName}</h3>
+                        <span class="age-gender">${profile.age} years, ${profile.gender}</span>
+                    </div>
+                    <div class="health-info-grid">
+                        <div class="info-item">
+                            <label>Anxiety Level:</label>
+                            <span>${profile.anxiety}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Depression Level:</label>
+                            <span>${profile.depression}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Sleep Quality:</label>
+                            <span>${profile.sleep}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Chronic Pain:</label>
+                            <span>${profile.chronicPain.hasPain ? 
+                                `Yes (Location: ${profile.chronicPain.painLocation}, Intensity: ${profile.chronicPain.painIntensity}/10)` 
+                                : 'No'}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>PTSD Symptoms:</label>
+                            <span>${profile.ptsd}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>ADHD Symptoms:</label>
+                            <span>${profile.adhd}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Stress Level:</label>
+                            <span>${profile.stress}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Exercise Routine:</label>
+                            <span>${profile.exercise}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Diet Quality:</label>
+                            <span>${profile.diet}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Daily Screen Time:</label>
+                            <span>${profile.screenTime} hours</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Social Activity:</label>
+                            <span>${profile.social}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = profileHTML;
+        }
+
+        // Load health profiles when My Plan section is shown
+        document.querySelector('a[onclick="showSection(\'my-plan\')"]').addEventListener('click', fetchAllHealthProfiles);
+    </script>
+</body>

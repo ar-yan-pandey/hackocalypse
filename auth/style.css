@@ -1,0 +1,149 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #1B0028, #000);
+    color: #FFF;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Background */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #5E33A0, #1B0028);
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 600;
+}
+
+.navbar .btn-nav {
+    background: #A960E6;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.navbar .btn-nav:hover {
+    background: #864ABA;
+}
+
+/* Auth Container */
+.auth-container {
+    width: 400px;
+    margin: 5% auto;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #BBB;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: #DDD;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFF;
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: #CCC;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #FFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn {
+    background: #6A5ACD;
+}
+
+.login-btn:hover {
+    background: #5B4BA8;
+}
+
+.signup-btn {
+    background: #A960E6;
+}
+
+.signup-btn:hover {
+    background: #864ABA;
+}
+
+.forgot {
+    display: block;
+    margin-top: 1rem;
+    color: #BBB;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
